@@ -148,10 +148,26 @@ void subBytes(byte_vector2d& block) {
     }
 }
 
+void invSubBytes(byte_vector2d& block) {
+    for (auto row = block.begin(); row != block.end(); row++) {
+        for (auto col = row->begin(); col != row->end(); col++) {
+            byte oldByte = *col;
+            *col = InvSbox[TOP_NIBBLE(oldByte)][BOTTOM_NIBBLE(oldByte)];
+        }
+    }
+}
+
 void shiftRows(byte_vector2d& block) {
     unsigned i = 1;
     for (auto row = block.begin()+i; row != block.end(); row++, i++) {
         std::rotate(row->begin(), row->begin()+i, row->end());
+    }
+}
+
+void invShiftRows(byte_vector2d& block) {
+    unsigned i = 1;
+    for (auto row = block.begin()+i; row != block.end(); row++, i++) {
+        std::rotate(row->begin(), row->begin()+(4-i), row->end());
     }
 }
 
@@ -166,6 +182,20 @@ void mixColumns(byte_vector2d& block) {
         block[1][col] = block0 ^ ffmultiply(0x02, block1) ^ ffmultiply(0x03, block2) ^ block3;
         block[2][col] = block0 ^ block1 ^ ffmultiply(0x02, block2) ^ ffmultiply(0x03, block3);
         block[3][col] = ffmultiply(0x03, block0) ^ block1 ^ block2 ^ ffmultiply(0x02, block3);
+    }
+}
+
+void invMixColumns(byte_vector2d& block) {
+    unsigned long numCols = block.front().size();
+    for (unsigned col = 0; col < numCols; col++) {
+        byte block0 = block[0][col];
+        byte block1 = block[1][col];
+        byte block2 = block[2][col];
+        byte block3 = block[3][col];
+        block[0][col] = ffmultiply(0x0e, block0) ^ ffmultiply(0x0b, block1) ^ ffmultiply(0x0d, block2) ^ ffmultiply(0x09, block3);
+        block[1][col] = ffmultiply(0x09, block0) ^ ffmultiply(0x0e, block1) ^ ffmultiply(0x0b, block2) ^ ffmultiply(0x0d, block3);
+        block[2][col] = ffmultiply(0x0d, block0) ^ ffmultiply(0x09, block1) ^ ffmultiply(0x0e, block2) ^ ffmultiply(0x0b, block3);
+        block[3][col] = ffmultiply(0x0b, block0) ^ ffmultiply(0x0d, block1) ^ ffmultiply(0x09, block2) ^ ffmultiply(0x0e, block3);
     }
 }
 
@@ -221,6 +251,33 @@ void cipher(unsigned Nr, byte_vector2d& block, word w[]) {
     printDebugLine(Nr, "o_put", block);
 }
 
+void invCipher(unsigned Nr, byte_vector2d& block, word w[]) {
+    printDebugLine(0, "iinput", block);
+    addRoundKeys(block, &w[Nr*4]);
+    printDebugLine(0, "ik_sch", &w[Nr*4]);
+
+    for (unsigned round = Nr-1; round >= 1; round--) {
+        printDebugLine(Nr-round, "istart", block);
+        invShiftRows(block);
+        printDebugLine(Nr-round, "is_row", block);
+        invSubBytes(block);
+        printDebugLine(Nr-round, "is_box", block);
+        addRoundKeys(block, &w[round*4]);
+        printDebugLine(Nr-round, "ik_sch", &w[round*4]);
+        invMixColumns(block);
+        printDebugLine(Nr-round, "im_col", block);
+    }
+
+    printDebugLine(Nr, "istart", block);
+    invShiftRows(block);
+    printDebugLine(Nr, "is_row", block);
+    invSubBytes(block);
+    printDebugLine(Nr, "is_box", block);
+    addRoundKeys(block, &w[0]);
+    printDebugLine(Nr, "ik_sch", &w[0]);
+    printDebugLine(Nr, "io_put", block);
+}
+
 int main() {
     byte key128_a[] = {
             0x2b, 0x7e, 0x15, 0x16,
@@ -256,11 +313,32 @@ int main() {
             {0xa8, 0x8d, 0xa2, 0x34}
     };
 
-    byte_vector2d block_c = {
+    byte_vector2d block_plaintext = {
             {0x00, 0x44, 0x88, 0xcc},
             {0x11, 0x55, 0x99, 0xdd},
             {0x22, 0x66, 0xaa, 0xee},
             {0x33, 0x77, 0xbb, 0xff},
+    };
+
+    byte_vector2d block_ciphertext128 = {
+            {0x69, 0x6a, 0xd8, 0x70},
+            {0xc4, 0x7b, 0xcd, 0xb4},
+            {0xe0, 0x04, 0xb7, 0xc5},
+            {0xd8, 0x30, 0x80, 0x5a},
+    };
+
+    byte_vector2d block_ciphertext192 = {
+            {0xdd, 0x86, 0x6e, 0xec},
+            {0xa9, 0x4c, 0xaf, 0x0d},
+            {0x7c, 0xdf, 0x70, 0x71},
+            {0xa4, 0xe0, 0xa0, 0x91},
+    };
+
+    byte_vector2d block_ciphertext256 = {
+            {0x8e, 0x51, 0xea, 0x4b},
+            {0xa2, 0x67, 0xfc, 0x49},
+            {0xb7, 0x45, 0x49, 0x60},
+            {0xca, 0xbf, 0x90, 0x89},
     };
 
     byte key128_c[] = {
@@ -296,7 +374,7 @@ int main() {
     word w[4*(Nr+1)];
     keyExpansion(Nk, Nr, key256_c, w);
 
-    cipher(Nr, block_c, w);
+    invCipher(Nr, block_ciphertext256, w);
 
     return 0;
 }
