@@ -121,8 +121,13 @@ word rotWord(word w) {
     return (w << 8) | ((w >> 24) & 0xFF);
 }
 
-void addRoundKeys(byte_vector2d block, word w[]) {
+void addRoundKeys(byte_vector2d& block, word w[]) {
+    for (unsigned col = 0; col < 4; col++) {
+        for (unsigned row = 0; row < 4; row++) {
+            block[row][col] ^= w[col] >> ((3-row)*8);
+        }
 
+    }
 }
 
 void subBytes(byte_vector2d& block) {
@@ -142,13 +147,16 @@ void shiftRows(byte_vector2d& block) {
 }
 
 void mixColumns(byte_vector2d& block) {
-    std::cout << "MixColumns" << std::endl;
     unsigned long numCols = block.front().size();
     for (unsigned col = 0; col < numCols; col++) {
-        block[0][col] = ffmultiply(0x02, block[0][col]) ^ ffmultiply(0x03, block[1][col]) ^ block[2][col] ^ block[3][col];
-        block[1][col] = block[0][col] ^ ffmultiply(0x02, block[1][col]) ^ ffmultiply(0x03, block[2][col]) ^ block[3][col];
-        block[2][col] = block[0][col] ^ block[1][col] ^ ffmultiply(0x02, block[2][col]) ^ ffmultiply(0x03, block[3][col]);
-        block[3][col] = ffmultiply(0x03, block[0][col]) ^ block[1][col] ^ block[2][col] ^ ffmultiply(0x02, block[3][col]);
+        byte block0 = block[0][col];
+        byte block1 = block[1][col];
+        byte block2 = block[2][col];
+        byte block3 = block[3][col];
+        block[0][col] = ffmultiply(0x02, block0) ^ ffmultiply(0x03, block1) ^ block2 ^ block3;
+        block[1][col] = block0 ^ ffmultiply(0x02, block1) ^ ffmultiply(0x03, block2) ^ block3;
+        block[2][col] = block0 ^ block1 ^ ffmultiply(0x02, block2) ^ ffmultiply(0x03, block3);
+        block[3][col] = ffmultiply(0x03, block0) ^ block1 ^ block2 ^ ffmultiply(0x02, block3);
     }
 }
 
@@ -181,46 +189,68 @@ void cipher(unsigned Nr, byte_vector2d& block, word w[]) {
     addRoundKeys(block, &w[0]);
 
     for (unsigned round = 1; round < Nr; round++) {
+        printBlock(block);
         subBytes(block);
+        printBlock(block);
         shiftRows(block);
+        printBlock(block);
         mixColumns(block);
+        printBlock(block);
         addRoundKeys(block, &w[round*4]);
+        std::cout << "-----------------" << std::endl;
     }
 
     subBytes(block);
+    printBlock(block);
     shiftRows(block);
-    addRoundKeys(block, &w[Nr]);
+    printBlock(block);
+    addRoundKeys(block, &w[Nr*4]);
+    printBlock(block);
 }
 
 int main() {
-    byte key[] = {
+    byte key128[] = {
             0x2b, 0x7e, 0x15, 0x16,
             0x28, 0xae, 0xd2, 0xa6,
             0xab, 0xf7, 0x15, 0x88,
-            0x09, 0xcf, 0x4f, 0x3c
+            0x09, 0xcf, 0x4f, 0x3c,
     };
+
+    byte key192[] = {
+            0x8e, 0x73, 0xb0, 0xf7,
+            0xda, 0x0e, 0x64, 0x52,
+            0xc8, 0x10, 0xf3, 0x2b,
+            0x80, 0x90, 0x79, 0xe5,
+            0x62, 0xf8, 0xea, 0xd2,
+            0x52, 0x2c, 0x6b, 0x7b,
+    };
+
+    byte key256[] = {
+            0x60, 0x3d, 0xeb, 0x10,
+            0x15, 0xca, 0x71, 0xbe,
+            0x2b, 0x73, 0xae, 0xf0,
+            0x85, 0x7d, 0x77, 0x81,
+            0x1f, 0x35, 0x2c, 0x07,
+            0x3b, 0x61, 0x08, 0xd7,
+            0x2d, 0x98, 0x10, 0xa3,
+            0x09, 0x14, 0xdf, 0xf4,
+    };
+
+    byte_vector2d block = {
+            {0x32, 0x88, 0x31, 0xe0},
+            {0x43, 0x5a, 0x31, 0x37},
+            {0xf6, 0x30, 0x98, 0x07},
+            {0xa8, 0x8d, 0xa2, 0x34}
+    };
+
 
     unsigned Nk = 4;
     unsigned Nr = Nk + 6;
+
     word w[4*(Nr+1)];
+    keyExpansion(Nk, Nr, key128, w);
 
-    keyExpansion(Nk, Nr, key, w);
-    printWordArray(w, 4*(Nr+1));
-
-    /*
-    byte_vector2d block = {
-            {0x34, 0x4d, 0x12, 0x90},
-            {0x00, 0x51, 0xab, 0x0f},
-            {0x40, 0x69, 0xf1, 0xc3},
-            {0x62, 0xda, 0x44, 0x8c}
-    };
-
-    printBlock(block);
-    subBytes(block);
-    printBlock(block);
-
-    printf("\n0x%02x 0x%02x", 0x12345678, rotWord(0x12345678));
-     */
+    cipher(Nr, block, w);
 
     return 0;
 }
