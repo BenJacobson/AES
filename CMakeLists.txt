@@ -3,5 +3,5 @@ project(AES)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES aes.cpp testcases.h aes.h)
 add_executable(AES ${SOURCE_FILES})

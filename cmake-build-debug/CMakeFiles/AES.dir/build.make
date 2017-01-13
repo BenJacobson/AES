@@ -57,38 +57,38 @@ include CMakeFiles/AES.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/AES.dir/flags.make
 
-CMakeFiles/AES.dir/main.cpp.o: CMakeFiles/AES.dir/flags.make
-CMakeFiles/AES.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/c/Users/BenTJ/Documents/Projects/AES/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AES.dir/main.cpp.o"
-	/usr/bin/c++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AES.dir/main.cpp.o -c /cygdrive/c/Users/BenTJ/Documents/Projects/AES/main.cpp
+CMakeFiles/AES.dir/aes.cpp.o: CMakeFiles/AES.dir/flags.make
+CMakeFiles/AES.dir/aes.cpp.o: ../aes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/c/Users/BenTJ/Documents/Projects/AES/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AES.dir/aes.cpp.o"
+	/usr/bin/c++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AES.dir/aes.cpp.o -c /cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.cpp
 
-CMakeFiles/AES.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AES.dir/main.cpp.i"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /cygdrive/c/Users/BenTJ/Documents/Projects/AES/main.cpp > CMakeFiles/AES.dir/main.cpp.i
+CMakeFiles/AES.dir/aes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AES.dir/aes.cpp.i"
+	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.cpp > CMakeFiles/AES.dir/aes.cpp.i
 
-CMakeFiles/AES.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AES.dir/main.cpp.s"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /cygdrive/c/Users/BenTJ/Documents/Projects/AES/main.cpp -o CMakeFiles/AES.dir/main.cpp.s
+CMakeFiles/AES.dir/aes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AES.dir/aes.cpp.s"
+	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.cpp -o CMakeFiles/AES.dir/aes.cpp.s
 
-CMakeFiles/AES.dir/main.cpp.o.requires:
+CMakeFiles/AES.dir/aes.cpp.o.requires:
 
-.PHONY : CMakeFiles/AES.dir/main.cpp.o.requires
+.PHONY : CMakeFiles/AES.dir/aes.cpp.o.requires
 
-CMakeFiles/AES.dir/main.cpp.o.provides: CMakeFiles/AES.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/AES.dir/main.cpp.o.provides
+CMakeFiles/AES.dir/aes.cpp.o.provides: CMakeFiles/AES.dir/aes.cpp.o.requires
+	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/aes.cpp.o.provides.build
+.PHONY : CMakeFiles/AES.dir/aes.cpp.o.provides
 
-CMakeFiles/AES.dir/main.cpp.o.provides.build: CMakeFiles/AES.dir/main.cpp.o
+CMakeFiles/AES.dir/aes.cpp.o.provides.build: CMakeFiles/AES.dir/aes.cpp.o
 
 
 # Object files for target AES
 AES_OBJECTS = \
-"CMakeFiles/AES.dir/main.cpp.o"
+"CMakeFiles/AES.dir/aes.cpp.o"
 
 # External object files for target AES
 AES_EXTERNAL_OBJECTS =
 
-AES.exe: CMakeFiles/AES.dir/main.cpp.o
+AES.exe: CMakeFiles/AES.dir/aes.cpp.o
 AES.exe: CMakeFiles/AES.dir/build.make
 AES.exe: CMakeFiles/AES.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/cygdrive/c/Users/BenTJ/Documents/Projects/AES/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable AES.exe"
@@ -99,7 +99,7 @@ CMakeFiles/AES.dir/build: AES.exe
 
 .PHONY : CMakeFiles/AES.dir/build
 
-CMakeFiles/AES.dir/requires: CMakeFiles/AES.dir/main.cpp.o.requires
+CMakeFiles/AES.dir/requires: CMakeFiles/AES.dir/aes.cpp.o.requires
 
 .PHONY : CMakeFiles/AES.dir/requires
 

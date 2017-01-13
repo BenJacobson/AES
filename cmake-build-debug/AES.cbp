@@ -80,7 +80,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/cygdrive/c/Users/BenTJ/Documents/Projects/AES/main.cpp">
+		<Unit filename="/cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.cpp">
+			<Option target="AES"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.h">
+			<Option target="AES"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/BenTJ/Documents/Projects/AES/testcases.h">
 			<Option target="AES"/>
 		</Unit>
 		<Unit filename="/cygdrive/c/Users/BenTJ/Documents/Projects/AES/CMakeLists.txt">

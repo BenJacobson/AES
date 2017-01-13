@@ -6,11 +6,25 @@
 
 #IncludeRegexTransform: 
 
-/cygdrive/c/Users/BenTJ/Documents/Projects/AES/main.cpp
+/cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.cpp
 iostream
 -
 vector
 -
 algorithm
 -
+aes.h
+/cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.h
+testcases.h
+/cygdrive/c/Users/BenTJ/Documents/Projects/AES/testcases.h
+
+/cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.h
+cstdint
+-
+vector
+-
+
+/cygdrive/c/Users/BenTJ/Documents/Projects/AES/testcases.h
+aes.h
+/cygdrive/c/Users/BenTJ/Documents/Projects/AES/aes.h
 

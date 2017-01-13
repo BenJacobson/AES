@@ -123,32 +123,32 @@ AES/fast:
 	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/build
 .PHONY : AES/fast
 
-main.o: main.cpp.o
+aes.o: aes.cpp.o
 
-.PHONY : main.o
+.PHONY : aes.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/main.cpp.o
-.PHONY : main.cpp.o
+aes.cpp.o:
+	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/aes.cpp.o
+.PHONY : aes.cpp.o
 
-main.i: main.cpp.i
+aes.i: aes.cpp.i
 
-.PHONY : main.i
+.PHONY : aes.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/main.cpp.i
-.PHONY : main.cpp.i
+aes.cpp.i:
+	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/aes.cpp.i
+.PHONY : aes.cpp.i
 
-main.s: main.cpp.s
+aes.s: aes.cpp.s
 
-.PHONY : main.s
+.PHONY : aes.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/main.cpp.s
-.PHONY : main.cpp.s
+aes.cpp.s:
+	$(MAKE) -f CMakeFiles/AES.dir/build.make CMakeFiles/AES.dir/aes.cpp.s
+.PHONY : aes.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... AES"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... aes.o"
+	@echo "... aes.i"
+	@echo "... aes.s"
 .PHONY : help
 
 

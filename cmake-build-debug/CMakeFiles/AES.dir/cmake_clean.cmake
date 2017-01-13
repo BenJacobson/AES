@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/AES.dir/main.cpp.o"
+  "CMakeFiles/AES.dir/aes.cpp.o"
   "AES.pdb"
   "AES.exe"
   "libAES.dll.a"
